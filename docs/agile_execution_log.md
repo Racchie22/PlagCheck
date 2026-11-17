@@ -8,7 +8,6 @@ This log records the project's actual planning and development activities. Updat
 - Initial repository branch: main
 - Current stage: Phase 0 – planning and setup
 - Planned project team size: 4
-- Current working arrangement: Initial planning and implementation are being handled by the repository owner. Additional collaborators may be invited later.
 
 ## Phase 0 checklist
 | Activity | Status | Evidence / notes |
