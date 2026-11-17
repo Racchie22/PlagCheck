@@ -1,41 +1,42 @@
 # PlagCheck – Smart Plagiarism Detection System
 
-PlagCheck is a student-built web application for checking textual similarity between documents. The initial version will compare user-provided text and uploaded documents against other documents added to the application.
+PlagCheck is a student-built web application for checking textual similarity between documents. The first increment compares two user-provided text samples.
 
-## Project status
-**Phase 0 – Initiation and planning.** The repository and initial planning documents are prepared. Sprint 1 implementation has not yet been recorded as complete.
+## Current project status
+**Sprint 1 – implementation and validation.** The text comparison interface, preprocessing module, TF-IDF similarity engine and automated test cases have been added. Test execution and manual application validation are still pending.
 
-## Planned core features
-- Compare two text passages or documents.
+## Sprint 1 functionality
+- Enter two text samples in the Streamlit interface.
+- Validate that both text boxes contain text.
+- Normalise text by lowercasing, replacing punctuation and collapsing whitespace.
 - Calculate a similarity percentage using TF-IDF and cosine similarity.
-- Identify sentences with strong textual overlap.
+- Display an explanation that similarity is not proof of plagiarism.
+- Run automated tests for preprocessing and similarity behaviour.
+
+## Planned later features
+- Identify matching sentences or passages.
 - Upload TXT, PDF and DOCX documents.
-- Compare a submitted document against documents stored in the application.
+- Compare against documents stored in the application.
 - Save check history in SQLite.
-- Generate a downloadable report.
+- Dashboard and downloadable report.
 
 ## Scope and limitations
-The first version checks similarity only against text supplied to or stored in PlagCheck. It does not search the entire internet. A similarity score is an indicator of textual overlap, not a final judgement of plagiarism or academic misconduct. Quoted text, references, common phrases and document length can affect the score.
+The first version checks similarity only between text supplied to the application. It does not search the entire internet. A similarity score is an indicator of textual overlap, not a final judgement of plagiarism or academic misconduct. Quoted text, references, common phrases and document context can affect the score.
 
-## Planned technology
+## Technology
 Python, Streamlit, scikit-learn, SQLite, Pytest, pypdf and python-docx.
 
 ## Run locally
 1. Create and activate a Python virtual environment.
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run: `streamlit run app.py`
-
-The application entry point and dependencies will be completed in the implementation sprints.
+3. Run tests: `pytest`
+4. Start the app: `streamlit run app.py`
 
 ## Repository structure
-- `app.py` – Streamlit application entry point
-- `modules/` – text processing, similarity, document parsing and database modules
+- `app.py` – Streamlit application
+- `modules/preprocessing.py` – text normalisation
+- `modules/similarity.py` – TF-IDF and cosine similarity
 - `tests/` – automated tests
 - `docs/` – project and Agile artefacts
-- `sample_documents/` – small sample files for local testing
-- `reports/` – generated example reports (not user submissions)
-
-## Agile working agreement
-Features are planned and delivered as integrated sprint increments. User stories define scope and acceptance criteria; they are not a requirement to stop and deliver after each individual story. Within a sprint, related stories will be implemented and tested together against one sprint goal. The board tracks the real status of work, while the execution log records actual activities and evidence. Sprint dates, commits, velocity and test outcomes will reflect work actually performed.
 
 See [project proposal](docs/project_proposal.md), [user stories](docs/user_stories.md), [product backlog](docs/product_backlog.md) and [execution log](docs/agile_execution_log.md).
