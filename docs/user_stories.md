@@ -1,6 +1,6 @@
 # User Stories and Acceptance Criteria
 
-Story points are initial relative estimates, not hours. Estimates may change after backlog refinement.
+Story points are initial relative estimates, not hours. Estimates may change after backlog refinement. User stories describe required outcomes and acceptance criteria; they do not require separate, sequential releases. Related stories may be implemented and validated together within a sprint.
 
 | ID | User story | Priority | Estimate |
 |---|---|---:|---:|
@@ -68,4 +68,4 @@ Story points are initial relative estimates, not hours. Estimates may change aft
 - The test command and outcome are recorded accurately.
 
 ## Definition of Done
-A story is Done only when its acceptance criteria are met, relevant tests pass, the change has been reviewed by a teammate where possible, the code is committed, and related documentation is updated. If a review or test is not applicable, the reason is recorded rather than assumed.
+A story is Done when its acceptance criteria are met, relevant automated tests pass, the change is committed, and related documentation is updated. A review by another person is welcome when a collaborator is available; when work is being completed individually, the implementation should be self-checked and the validation evidence recorded. A story is not marked Done merely because coding has started.
