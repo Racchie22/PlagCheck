@@ -50,15 +50,15 @@ This log records the project's actual planning and development activities. Updat
 - Replaced the initial placeholder screen in `app.py` with a two-text Streamlit comparison form and similarity result display.
 - Added automated test files for preprocessing and similarity behaviour.
 
-### Validation status
-- Automated test cases have been written for normalisation, identical text, unrelated text, partial overlap and invalid/empty inputs.
-- **Test execution status: Pending.** The tests must be run in the project environment before recording pass/fail results.
-- Manual Streamlit run-through: Pending.
-- Sprint review / acceptance: Pending.
+### Validation progress
+- The 12 core test cases were run against an isolated local copy of the Sprint 1 preprocessing and similarity implementation: **12 passed**.
+- The tests still need to be run from the actual repository checkout using its installed dependencies.
+- Streamlit launch and manual UI checks: Pending.
+- Sprint review / final acceptance: Pending.
 
 ### Remaining Sprint 1 actions
-1. Install dependencies from `requirements.txt`.
-2. Run `pytest` and resolve any failures.
+1. In the project virtual environment, install dependencies from `requirements.txt`.
+2. Run `python -m pytest -q` from the repository root and resolve any failures.
 3. Run `streamlit run app.py` and manually check valid and invalid inputs.
 4. Confirm the acceptance criteria for US01, US02, US03 and US10.
 5. Record actual test output and update issue/board statuses based on evidence.
