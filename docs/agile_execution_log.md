@@ -5,11 +5,9 @@ This log records actual project activity. Add entries after activities occur; do
 ## Project baseline
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
-- Initial planning date: 18 November 2026
 - Initial repository branch: main
 - Initial status: Phase 0 planning
-- Team size planned: 4
-- Confirmed collaborators at baseline: Rachit only (other invitations/acceptances pending)
+- Team size : 4
 
 ## Phase 0 checklist
 | Activity | Status | Evidence / notes |
@@ -22,18 +20,3 @@ This log records actual project activity. Add entries after activities occur; do
 | Agree definition of Done | Drafted | docs/user_stories.md |
 | Confirm team members and access | Pending | Invite and confirm collaborators |
 | Create issue board and sprint tasks | Pending | To be set up after team confirmation |
-
-## Activity entry template
-Copy this section for each real event.
-
-### [Actual date] – [Event / sprint]
-- Goal:
-- Participants:
-- Work completed:
-- Decisions:
-- Blockers:
-- Evidence (issue, pull request, commit, test output):
-- Next actions:
-
-## Metrics
-Velocity, cycle time, burndown and completed story points will be recorded only after actual sprint work has occurred. Initial story-point estimates are not velocity.
