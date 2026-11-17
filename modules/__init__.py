@@ -1,0 +1,1 @@
+"""PlagCheck application modules."""
