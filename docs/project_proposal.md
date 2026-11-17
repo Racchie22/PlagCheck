@@ -28,7 +28,7 @@ PlagCheck will be a web application built with Python and Streamlit. A user will
 - Version control and CI: Git, GitHub and GitHub Actions
 
 ## 6. Expected outcome
-A working local web application that compares user-provided documents and reports textual similarity with clear limitations. The project will also provide evidence of the team's Agile process through genuine planning artefacts, incremental commits, tests and reviews.
+A working local web application that compares user-provided documents and reports textual similarity with clear limitations. The project will also provide evidence of the Agile process through genuine planning artefacts, incremental commits, tests and reviews.
 
 ## 7. Risks and mitigations
 | Risk | Mitigation |
@@ -36,7 +36,7 @@ A working local web application that compares user-provided documents and report
 | PDF text extraction may fail for scanned/image-only PDFs | Explain the limitation and accept text-based PDFs in the first version |
 | Similarity score may be misunderstood | Display an explanation that similarity is not proof of plagiarism |
 | Common phrases may inflate similarity | Show matching passages and document limitations |
-| Short project deadline | Prioritise a working core comparison before optional features |
+| Short project deadline | Deliver a coherent, working core feature set in Sprint 1 before optional features |
 | Integration conflicts | Use small modules, Git branches/pull requests where practical, and regular integration |
 
 ## 8. Success criteria
@@ -48,4 +48,4 @@ A working local web application that compares user-provided documents and report
 - Project documentation accurately records completed work and known limitations.
 
 ## 9. Agile approach
-The team intends to use a Scrum-inspired workflow with a prioritised product backlog, short implementation increments, reviews and retrospectives. Kanban-style task tracking and WIP limits will be used where helpful. Because the academic submission deadline is short, actual execution dates may be compressed; planned sprint durations will not be presented as elapsed time.
+The project uses a Scrum-inspired workflow with a prioritised product backlog, sprint goals, reviews and retrospectives. A sprint delivers a coherent, integrated increment rather than requiring each user story to be released separately. User stories provide scope and acceptance criteria; implementation tasks can be grouped to complete the sprint goal efficiently. A Kanban-style board supports task tracking. Actual execution dates may be compressed to meet the academic deadline; planned sprint durations will not be presented as elapsed time.
