@@ -29,7 +29,7 @@ Python, Streamlit, scikit-learn, SQLite, Pytest, pypdf and python-docx.
 ## Run locally
 1. Create and activate a Python virtual environment.
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run tests: `pytest`
+3. Run tests: `python -m pytest -q`
 4. Start the app: `streamlit run app.py`
 
 ## Repository structure
