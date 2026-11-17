@@ -38,4 +38,4 @@ The application entry point and dependencies will be completed in the implementa
 ## Agile working agreement
 Work is planned in small increments. Each feature will have acceptance criteria, be tested, reviewed and documented before being marked complete. Sprint dates, commits, velocity and test outcomes will reflect work actually performed; planned estimates will be labelled as estimates.
 
-See [project proposal](docs/project_proposal.md), [user stories](docs/user_stories.md), [product backlog](docs/product_backlog.md), [team roles](docs/team_roles.md) and [execution log](docs/agile_execution_log.md).
+See [project proposal](docs/project_proposal.md), [user stories](docs/user_stories.md), [product backlog](docs/product_backlog.md) and [execution log](docs/agile_execution_log.md).
