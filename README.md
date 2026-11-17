@@ -3,7 +3,7 @@
 PlagCheck is a student-built web application for checking textual similarity between documents. The initial version will compare user-provided text and uploaded documents against other documents added to the application.
 
 ## Project status
-**Phase 0 – Initiation and planning.** The repository and initial planning documents are being prepared. Implementation and test results will be recorded only after the relevant work is completed.
+**Phase 0 – Initiation and planning.** The repository and initial planning documents are prepared. Sprint 1 implementation has not yet been recorded as complete.
 
 ## Planned core features
 - Compare two text passages or documents.
@@ -36,6 +36,6 @@ The application entry point and dependencies will be completed in the implementa
 - `reports/` – generated example reports (not user submissions)
 
 ## Agile working agreement
-Work is planned in small increments. Each feature will have acceptance criteria, be tested, reviewed and documented before being marked complete. Sprint dates, commits, velocity and test outcomes will reflect work actually performed; planned estimates will be labelled as estimates.
+Features are planned and delivered as integrated sprint increments. User stories define scope and acceptance criteria; they are not a requirement to stop and deliver after each individual story. Within a sprint, related stories will be implemented and tested together against one sprint goal. The board tracks the real status of work, while the execution log records actual activities and evidence. Sprint dates, commits, velocity and test outcomes will reflect work actually performed.
 
 See [project proposal](docs/project_proposal.md), [user stories](docs/user_stories.md), [product backlog](docs/product_backlog.md) and [execution log](docs/agile_execution_log.md).
