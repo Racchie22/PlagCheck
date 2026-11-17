@@ -6,10 +6,10 @@ This log records the project's actual planning and development activities. Updat
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
 - Initial repository branch: main
-- Current stage: Phase 0 – planning and setup
+- Current stage: Sprint 1 – implementation and validation
 - Current working arrangement: Initial planning and implementation are being handled by the repository owner. Additional collaborators may be invited later.
 
-## Phase 0 checklist
+## Phase 0 – Planning and setup
 | Activity | Status | Evidence / notes |
 |---|---|---|
 | Create private GitHub repository | Completed | PlagCheck repository; main branch |
@@ -18,38 +18,50 @@ This log records the project's actual planning and development activities. Updat
 | Prioritise product backlog and estimates | Completed | docs/product_backlog.md; initial estimate: 37 points |
 | Define Definition of Done | Drafted | docs/user_stories.md |
 | Create GitHub issues for user stories | Completed | Issues #1–#10 |
-| Create GitHub Project board and add issues | Completed | PlagCheck Agile Project Board; board currently used as a planning view |
+| Create GitHub Project board and add issues | Completed | PlagCheck Agile Project Board; initial card arrangement was a planning example |
 | Confirm additional team participation and any later role allocation | Deferred | Revisit only if additional collaborators join |
-| Confirm Sprint 1 duration and capacity | Pending | Set before implementation based on remaining time |
 
-## Activity log
+## Phase 0 activity log
 
 ### 18 November 2026 – Project initiation and planning setup
 - Goal: Establish the repository and prepare the initial project plan.
 - Participants: Repository owner.
 - Work completed: Created the project proposal, README, requirements file, user stories, product backlog, execution log and initial application placeholder. Created GitHub issues #1–#10 from the user stories.
 - Decisions: Use Python, Streamlit, scikit-learn, SQLite and Pytest as the planned technology stack. Begin with text-to-text comparison before adding document uploads and reporting. Handle initial planning and implementation individually; discuss additional collaborators later.
-- Blockers: Sprint duration and capacity still need to be confirmed.
 - Evidence: Initial baseline commit and GitHub issues #1–#10 in the PlagCheck repository.
-- Next actions: Confirm Sprint 1 timebox, then implement and validate the complete Sprint 1 increment.
 
 ### [Actual date] – GitHub Project board created
 - Goal: Set up a visual view for tracking the product backlog.
 - Participants: Repository owner.
 - Work completed: Created the PlagCheck board and added the ten user-story issues. Configured Backlog, To Do, In Progress, Testing and Done columns.
-- Decisions: The initial card arrangement is a sample/planning arrangement, not a claim that those user stories have reached those development stages. Board statuses will be updated to match actual work.
+- Decisions: The initial card arrangement is a sample/planning arrangement, not a claim that user stories have reached those development stages. Board statuses will be updated to match actual work.
 - Evidence: PlagCheck GitHub Project board.
-- Next actions: Update card statuses as real implementation and testing progress occurs.
 
-## Sprint execution approach
-A sprint is planned and delivered as one coherent increment. Related user stories can be worked on together and integrated before the sprint outcome is demonstrated. Internal tasks may be completed in parallel or in sequence as practical, but individual user stories do not need to be released one at a time.
+## Sprint 1 – Working text comparison
 
-### Sprint 1 – Working text comparison
-- Planned scope: US01, US02, US03 and US10.
-- Sprint goal: Deliver one usable, tested flow that accepts two text samples, preprocesses them, calculates a similarity percentage and validates core behaviour through automated tests.
-- Status: Not started.
-- Actual start/end dates: To be recorded when known.
-- Review outcome and evidence: To be recorded after implementation and demonstration.
+**Sprint goal:** Deliver one usable text-comparison flow that accepts two text samples, preprocesses them, calculates a similarity percentage and has automated tests for core behaviour.
+
+**Selected user stories:** US01, US02, US03 and US10 (13 estimated story points).
+
+### Work completed so far
+- Added `modules/preprocessing.py` with lowercase conversion, punctuation replacement and whitespace normalisation.
+- Added `modules/similarity.py` using scikit-learn TF-IDF vectorisation and cosine similarity.
+- Added input validation for empty text and non-string values.
+- Replaced the initial placeholder screen in `app.py` with a two-text Streamlit comparison form and similarity result display.
+- Added automated test files for preprocessing and similarity behaviour.
+
+### Validation status
+- Automated test cases have been written for normalisation, identical text, unrelated text, partial overlap and invalid/empty inputs.
+- **Test execution status: Pending.** The tests must be run in the project environment before recording pass/fail results.
+- Manual Streamlit run-through: Pending.
+- Sprint review / acceptance: Pending.
+
+### Remaining Sprint 1 actions
+1. Install dependencies from `requirements.txt`.
+2. Run `pytest` and resolve any failures.
+3. Run `streamlit run app.py` and manually check valid and invalid inputs.
+4. Confirm the acceptance criteria for US01, US02, US03 and US10.
+5. Record actual test output and update issue/board statuses based on evidence.
 
 ## Activity entry template
 Copy this section for each real event.
