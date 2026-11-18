@@ -11,7 +11,7 @@ The backlog is prioritised and will be refined as the project progresses. Initia
 | 5 | US04 | Sentence-level matching indicators | Should | 5 | Sprint 2 |
 | 6 | US05 | TXT/PDF/DOCX upload and extraction | Should | 5 | Sprint 3 |
 | 7 | US06 | Compare against locally stored documents | Should | 5 | Sprint 3 |
-| 8 | US07 | SQLite check history | Could | 3 | Sprint 3/4 |
+| 8 | US07 | SQLite check history | Could | 3 | Sprint 4 |
 | 9 | US08 | Dashboard summary | Could | 3 | Sprint 4 |
 | 10 | US09 | Downloadable PDF report | Could | 3 | Sprint 4 |
 
