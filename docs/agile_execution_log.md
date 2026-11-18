@@ -6,7 +6,7 @@ This log records the project's actual planning and development activities. Updat
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
 - Initial repository branch: main
-- Current stage: Sprint 1 – implementation and partial validation
+- Current stage: Sprint 2 – implementation and validation
 - Current working arrangement: Initial planning and implementation are being handled by the repository owner. Additional collaborators may be invited later.
 
 ## Phase 0 – Planning and setup
@@ -47,22 +47,40 @@ This log records the project's actual planning and development activities. Updat
 - Added `modules/preprocessing.py` with lowercase conversion, punctuation replacement and whitespace normalisation.
 - Added `modules/similarity.py` using scikit-learn TF-IDF vectorisation and cosine similarity.
 - Added input validation for empty text and non-string values.
-- Replaced the initial placeholder screen in `app.py` with a two-text Streamlit comparison form and similarity result display.
+- Built the two-text Streamlit comparison form and similarity result display.
 - Added automated test files for preprocessing and similarity behaviour.
-- Launched the Streamlit application locally and successfully completed one sample text comparison; the interface displayed a similarity result. This confirms the app launches and the basic comparison path works, but does not by itself verify all acceptance criteria.
+- User confirmed that the Sprint 1 tests ran successfully in their local project environment.
+- User launched the Streamlit application locally and successfully completed a sample text comparison.
 
-### Validation progress
-- The 12 core test cases were run against an isolated local copy of the Sprint 1 preprocessing and similarity implementation: **12 passed**. This was not a test run from the actual repository checkout.
-- Actual repository test execution using `python -m pytest -q`: Pending.
-- Manual checks for identical inputs, unrelated inputs and empty-input handling: Pending confirmation.
-- Sprint review / final acceptance: Pending.
+### Sprint 1 close-out
+- User-reported automated test result: passed. Exact terminal output has not been added to this log.
+- Sample UI comparison: successful.
+- Sprint 1 implementation was retained in a separate local backup folder by the repository owner.
+- Formal review/retrospective notes and screenshots can be added if required for the course submission.
 
-### Remaining Sprint 1 actions
-1. From the actual repository root and active project virtual environment, run `python -m pytest -q` and resolve any failures.
-2. In the Streamlit app, test identical text, unrelated text and empty input.
-3. Confirm the acceptance criteria for US01, US02, US03 and US10.
-4. Record actual test output and update issue/board statuses based on evidence.
-5. Conduct and record the sprint review and retrospective before marking the sprint complete.
+## Sprint 2 – Sentence-level matching
+
+**Sprint goal:** Extend the text comparison result so users can inspect likely sentence-level overlap between the two text samples.
+
+**Selected user story:** US04 – Identify matching sentences (5 estimated story points).
+
+### Initial implementation
+- Added `modules/matching.py` to split text using common sentence punctuation and compare sentence vectors using TF-IDF and cosine similarity.
+- Added a documented 50% similarity threshold. For each sentence in Text 1, the function selects its closest sentence in Text 2 and reports the pair only when it reaches the threshold.
+- Updated `app.py` to display matching sentence pairs and their similarity percentages, or a message when no pairs meet the threshold.
+- Added `tests/test_matching.py` for sentence splitting, exact matches, likely matches, unrelated sentences, custom threshold, empty input and invalid values.
+
+### Validation status
+- Implementation has been committed to the GitHub main branch.
+- Local execution of the new Sprint 2 tests and UI checks: Pending.
+- Sprint review and acceptance of US04: Pending.
+
+### Remaining Sprint 2 actions
+1. Pull the latest main branch into the local working copy.
+2. Run `python -m pytest -v` and resolve any failures.
+3. Run the Streamlit app and test exact matches, partial matches, unrelated sentences and empty input.
+4. Review whether the 50% threshold gives sensible results for representative text.
+5. Record actual test output and screenshots before marking US04 Done.
 
 ## Activity entry template
 Copy this section for each real event.
