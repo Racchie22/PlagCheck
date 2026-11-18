@@ -21,9 +21,10 @@ Team roles and task ownership will be discussed and documented when additional m
 2. Clone the repository.
 3. Create and activate a virtual environment.
 4. Install dependencies with `pip install -r requirements.txt`.
-5. Run the starter application with `streamlit run app.py`.
+5. Run the automated tests with `python -m pytest -q`.
+6. Start the application with `streamlit run app.py`.
 
-The starter app is only a project placeholder at this stage. Core plagiarism comparison will be implemented in Sprint 1.
+The current Sprint 1 application supports comparing two text samples. Later features such as document uploads, local document collection comparison, history and reporting are planned increments, not current functionality.
 
 ## Git working rules
 - Use a separate feature branch for a substantial task where practical.
