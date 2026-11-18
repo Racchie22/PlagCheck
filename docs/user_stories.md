@@ -1,19 +1,21 @@
 # User Stories and Acceptance Criteria
 
-Story points are initial relative estimates, not hours. Estimates may change after backlog refinement. User stories describe required outcomes and acceptance criteria; they do not require separate, sequential releases. Related stories may be implemented and validated together within a sprint.
+Story points are initial relative estimates, not hours. Related stories may be implemented and validated together within a sprint.
 
-| ID | User story | Priority | Estimate |
-|---|---|---:|---:|
-| US01 | As a user, I want to enter two text samples so that I can compare them. | Must | 2 |
-| US02 | As a user, I want text to be cleaned consistently so that comparison is less affected by formatting. | Must | 3 |
-| US03 | As a user, I want to see a similarity percentage so that I can understand the degree of textual overlap. | Must | 3 |
-| US04 | As a user, I want similar sentences or passages to be identified so that I can inspect the overlap. | Should | 5 |
-| US05 | As a user, I want to upload TXT, PDF or DOCX files so that I can compare real documents. | Should | 5 |
-| US06 | As a user, I want to compare an uploaded document with documents stored in the app so that I can check against a local collection. | Should | 5 |
-| US07 | As a user, I want previous checks to be saved so that I can review them later. | Could | 3 |
-| US08 | As a user, I want a dashboard summary so that I can view basic usage and result information. | Could | 3 |
-| US09 | As a user, I want to download a report so that I can keep a record of a comparison. | Could | 3 |
-| US10 | As a developer, I want automated tests for core behaviour so that changes can be checked reliably. | Must | 5 |
+## User stories
+
+| ID | User story | Priority | Estimate | Status |
+|---|---|---:|---:|---|
+| US01 | As a user, I want to enter two text samples so that I can compare them. | Must | 2 | Complete |
+| US02 | As a user, I want text to be cleaned consistently so that comparison is less affected by formatting. | Must | 3 | Complete |
+| US03 | As a user, I want to see a similarity percentage so that I can understand the degree of textual overlap. | Must | 3 | Complete |
+| US04 | As a user, I want similar sentences or passages to be identified so that I can inspect the overlap. | Should | 5 | Complete |
+| US05 | As a user, I want to upload TXT, PDF or DOCX files so that I can compare real documents. | Should | 5 | Complete |
+| US06 | As a user, I want to compare an uploaded document with documents stored in the app so that I can check against a local collection. | Should | 5 | Complete |
+| US07 | As a user, I want previous checks to be saved so that I can review them later. | Could | 3 | Planned |
+| US08 | As a user, I want a dashboard summary so that I can view basic usage and result information. | Could | 3 | Planned |
+| US09 | As a user, I want to download a report so that I can keep a record of a comparison. | Could | 3 | Planned |
+| US10 | As a developer, I want automated tests for core behaviour so that changes can be checked reliably. | Must | 5 | Complete |
 
 ## Acceptance criteria
 
@@ -41,7 +43,7 @@ Story points are initial relative estimates, not hours. Estimates may change aft
 ### US05 – Upload documents
 - TXT, text-based PDF and DOCX files are accepted.
 - Unsupported file types and unreadable/empty documents produce clear errors.
-- The extracted text can be passed to the comparison feature.
+- Extracted text can be passed to the comparison feature.
 
 ### US06 – Compare with stored documents
 - A document can be compared with the local collection.
@@ -68,4 +70,5 @@ Story points are initial relative estimates, not hours. Estimates may change aft
 - The test command and outcome are recorded accurately.
 
 ## Definition of Done
-A story is Done when its acceptance criteria are met, relevant automated tests pass, the change is committed, and related documentation is updated. A review by another person is welcome when a collaborator is available; when work is being completed individually, the implementation should be self-checked and the validation evidence recorded. A story is not marked Done merely because coding has started.
+
+A story is Done when its acceptance criteria are met, relevant automated tests pass, the change is committed and related documentation is updated. When working individually, implementation should be self-checked and validation evidence recorded. A story is not marked Done merely because coding has started.
