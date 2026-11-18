@@ -1,89 +1,144 @@
 # Agile Execution Log
 
-This log records the project's actual planning and development activities. Update it as work happens; do not record planned work as completed.
+This log records actual planning and development activities. Planned work is not recorded as completed work.
 
 ## Project baseline
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
-- Initial repository branch: main
-- Current stage: Sprint 2 – implementation and validation
-- Current working arrangement: Initial planning and implementation are being handled by the repository owner. Additional collaborators may be invited later.
+- Main branch: `main`
+- Current stage: Sprint 3 completed; Sprint 4 planned
+- Initial implementation was carried out by the repository owner.
 
 ## Phase 0 – Planning and setup
+
 | Activity | Status | Evidence / notes |
 |---|---|---|
 | Create private GitHub repository | Completed | PlagCheck repository; main branch |
-| Define problem statement and scope | Completed | docs/project_proposal.md |
-| Prepare user stories and acceptance criteria | Completed | docs/user_stories.md |
-| Prioritise product backlog and estimates | Completed | docs/product_backlog.md; initial estimate: 37 points |
-| Define Definition of Done | Drafted | docs/user_stories.md |
+| Define problem statement and scope | Completed | `docs/project_proposal.md` |
+| Prepare user stories and acceptance criteria | Completed | `docs/user_stories.md` |
+| Prioritise product backlog and estimates | Completed | `docs/product_backlog.md`; initial estimate: 37 points |
 | Create GitHub issues for user stories | Completed | Issues #1–#10 |
-| Create GitHub Project board and add issues | Completed | PlagCheck Agile Project Board; initial card arrangement was a planning example |
-| Confirm additional team participation and any later role allocation | Deferred | Revisit only if additional collaborators join |
+| Create GitHub Project board and add issues | Completed | PlagCheck Agile Project Board |
+| Confirm additional team participation | Deferred | Revisit if collaborators join |
 
-## Phase 0 activity log
-
-### 18 November 2026 – Project initiation and planning setup
-- Goal: Establish the repository and prepare the initial project plan.
-- Participants: Repository owner.
-- Work completed: Created the project proposal, README, requirements file, user stories, product backlog, execution log and initial application placeholder. Created GitHub issues #1–#10 from the user stories.
-- Decisions: Use Python, Streamlit, scikit-learn, SQLite and Pytest as the planned technology stack. Begin with text-to-text comparison before adding document uploads and reporting. Handle initial planning and implementation individually; discuss additional collaborators later.
-- Evidence: Initial baseline commit and GitHub issues #1–#10 in the PlagCheck repository.
+### 18 November 2026 – Project initiation and planning
+- Created the project proposal, README, requirements file, user stories, product backlog and execution log.
+- Created GitHub issues #1–#10 from the user stories.
+- Selected Python, Streamlit, scikit-learn, SQLite and Pytest as the planned technology stack.
+- Decided to deliver text comparison first, followed by sentence matching, document comparison and reporting.
 
 ### GitHub Project board setup
-- Goal: Set up a visual view for tracking the product backlog.
-- Participants: Repository owner.
-- Work completed: Created the PlagCheck board and added the ten user-story issues. Configured Backlog, To Do, In Progress, Testing and Done columns.
-- Decisions: The initial card arrangement is a sample/planning arrangement, not a claim that user stories have reached those development stages. Board statuses will be updated to match actual work.
-- Evidence: PlagCheck GitHub Project board.
+- Created the PlagCheck board and added the ten user-story issues.
+- Configured Backlog, To Do, In Progress, Testing and Done columns.
+- Initial card placement was a planning arrangement, not evidence of completed work. Board statuses should reflect actual progress.
 
 ## Sprint 1 – Working text comparison
 
-**Sprint goal:** Deliver one usable text-comparison flow that accepts two text samples, preprocesses them, calculates a similarity percentage and has automated tests for core behaviour.
+**Sprint goal:** Deliver a usable text-comparison flow that accepts two text samples, preprocesses them, calculates a similarity percentage and has automated tests.
 
 **Selected user stories:** US01, US02, US03 and US10 (13 estimated story points).
 
 ### Work completed
-- Added `modules/preprocessing.py` with lowercase conversion, punctuation replacement and whitespace normalisation.
+- Added `modules/preprocessing.py` for lowercasing, punctuation replacement and whitespace normalisation.
 - Added `modules/similarity.py` using scikit-learn TF-IDF vectorisation and cosine similarity.
 - Added input validation for empty text and non-string values.
 - Built the two-text Streamlit comparison form and similarity result display.
-- Added automated test files for preprocessing and similarity behaviour.
-- User confirmed that the Sprint 1 tests ran successfully in their local project environment.
-- User launched the Streamlit application locally and successfully completed a sample text comparison.
+- Added automated tests for preprocessing and similarity behaviour.
+- User confirmed that the Sprint 1 tests passed locally and that the Streamlit application launched and produced a sample comparison.
 
 ### Sprint 1 close-out
-- User-reported automated test result: passed. Exact terminal output has not been added to this log.
-- Sample UI comparison: successful.
-- Sprint 1 implementation was retained in a separate local backup folder by the repository owner.
-- Formal review/retrospective notes and screenshots can be added if required for the course submission.
+- User-reported local tests passed; exact terminal output was not archived in this log.
+- Sample UI comparison was successful.
 
 ## Sprint 2 – Sentence-level matching
 
-**Sprint goal:** Extend the text comparison result so users can inspect likely sentence-level overlap between the two text samples.
+**Sprint goal:** Extend text comparison with sentence-level matching so users can inspect likely textual overlap.
 
 **Selected user story:** US04 – Identify matching sentences (5 estimated story points).
 
-### Initial implementation
-- Added `modules/matching.py` to split text using common sentence punctuation and compare sentence vectors using TF-IDF and cosine similarity.
-- Added a documented 50% similarity threshold. For each sentence in Text 1, the function selects its closest sentence in Text 2 and reports the pair only when it reaches the threshold.
-- Updated `app.py` to display matching sentence pairs and their similarity percentages, or a message when no pairs meet the threshold.
-- Added `tests/test_matching.py` for sentence splitting, exact matches, likely matches, unrelated sentences, custom threshold, empty input and invalid values.
+### Work completed
+- Added `modules/matching.py` to split text into sentences and compare sentence vectors using TF-IDF and cosine similarity.
+- Set a default matching threshold of 50%.
+- For each sentence in Text 1, the algorithm selects its closest sentence in Text 2 and returns the pair when it meets the threshold.
+- Updated `app.py` to display matching sentence pairs and similarity percentages.
+- Added `tests/test_matching.py` for sentence splitting, identical and unrelated sentences, custom thresholds, empty input and invalid values.
+- Improved whitespace normalisation to handle line breaks commonly introduced by PDF text extraction and filtered fragments shorter than two words.
 
-### Validation status
-- Implementation has been committed to the GitHub main branch.
-- Local execution of the new Sprint 2 tests and UI checks: Pending.
-- Sprint review and acceptance of US04: Pending.
+### Validation and close-out
+- User manually tested sentence matching, including examples with line breaks.
+- Sprint 2 implementation was committed and pushed to the GitHub main branch.
+- US04 implementation and validation were completed.
 
-### Remaining Sprint 2 actions
-1. Pull the latest main branch into the local working copy.
-2. Run `python -m pytest -v` and resolve any failures.
-3. Run the Streamlit app and test exact matches, partial matches, unrelated sentences and empty input.
-4. Review whether the 50% threshold gives sensible results for representative text.
-5. Record actual test output and screenshots before marking US04 Done.
+## Sprint 3 – Document upload and collection comparison
+
+**Sprint goal:** Allow users to upload common document formats, store documents locally and compare an uploaded document against the stored collection.
+
+**Selected user stories:**
+- US05 – Upload TXT/PDF/DOCX documents (5 estimated story points).
+- US06 – Compare against stored documents (5 estimated story points).
+
+### Work completed
+
+#### Document extraction
+- Added `modules/document_reader.py`.
+- Implemented TXT extraction using UTF-8 decoding, PDF extraction using pypdf and DOCX extraction using python-docx.
+- Added validation for unsupported formats, unreadable files and empty extracted text.
+- PDF extraction combines text from all pages.
+
+#### Local document collection
+- Added `modules/document_store.py`.
+- Implemented local storage under `data/documents/`.
+- Added filename sanitisation and duplicate filename handling to avoid overwriting existing documents.
+- Implemented retrieval of stored documents.
+- Implemented comparison of uploaded text against readable stored documents.
+- Sorted comparison results by similarity percentage in descending order.
+
+#### Streamlit integration
+- Updated `app.py` with separate Text Comparison and Document Comparison tabs.
+- Added multi-file upload for adding documents to the local collection.
+- Added document upload and comparison against the collection.
+- Displayed ranked similarity results and the closest matching document.
+- Integrated sentence-level matching with the closest stored document.
+
+#### Testing and validation
+- Added `tests/test_document_reader.py` and `tests/test_document_store.py`.
+- Extended sentence-matching tests for whitespace and PDF line-break handling.
+- Added a multi-page PDF extraction test.
+- User confirmed that all **35 automated tests passed locally**.
+- User manually tested TXT, PDF and DOCX uploads, local document storage and document comparison.
+- Updated `.gitignore` so uploaded documents are not committed; retained `data/documents/.gitkeep` to preserve the directory in Git.
+
+### Sprint 3 close-out
+- Implementation committed as `be882a1`.
+- Commit message: `Sprint 3: Add document upload and collection comparison`.
+- Changes successfully pushed to the GitHub `main` branch.
+- US05 and US06 implementation and validation completed.
+- Sprint 3 is complete.
+
+### Sprint 3 outcome
+The application supports text-to-text comparison and document-to-local-collection comparison. Users can inspect overall similarity scores and sentence-level matches. The local document collection is intentionally not tracked by Git.
+
+## Sprint 4 – History, dashboard and PDF reports
+
+**Planned sprint goal:** Add persistence and reporting so users can review and retain previous comparison results.
+
+**Selected user stories:**
+- US07 – Save check history (3 estimated story points).
+- US08 – Dashboard summary (3 estimated story points).
+- US09 – Downloadable PDF report (3 estimated story points).
+
+### Planned work
+- Implement SQLite storage for comparison history.
+- Save useful comparison metadata and similarity results.
+- Display previous checks through a dashboard.
+- Generate downloadable PDF comparison reports.
+- Add automated tests for the new functionality.
+
+**Status:** Planned; implementation has not started.
 
 ## Activity entry template
-Copy this section for each real event.
+
+Copy this section for each new real event.
 
 ### [Actual date] – [Event / sprint]
 - Goal:
@@ -95,4 +150,5 @@ Copy this section for each real event.
 - Next actions:
 
 ## Metrics
-Record velocity, cycle time, burndown and completed story points only after actual sprint work has occurred. Initial story-point estimates are not velocity.
+
+The initial product backlog estimate is 37 story points. Do not report this estimate as velocity. Record velocity, cycle time, burndown and completed points only when supported by actual sprint tracking.
