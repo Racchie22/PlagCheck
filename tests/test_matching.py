@@ -59,3 +59,28 @@ def test_invalid_threshold_is_rejected():
 def test_non_string_input_is_rejected():
     with pytest.raises(TypeError):
         find_matching_sentences(None, "Some sentence.")
+
+
+def test_split_sentences_handles_pdf_line_breaks():
+    text = (
+        "Renewable energy comes from natural sources\n"
+        "that are replenished continuously.\n"
+        "Solar power is widely used."
+    )
+
+    result = split_sentences(text)
+
+    assert len(result) == 2
+    assert result[0] == (
+        "Renewable energy comes from natural sources that "
+        "are replenished continuously."
+    )
+    assert result[1] == "Solar power is widely used."
+
+
+def test_split_sentences_ignores_single_word_fragments():
+    text = "TRAINING\nREPORT\nRenewable energy is important."
+
+    result = split_sentences(text)
+
+    assert result == ["TRAINING REPORT Renewable energy is important."]

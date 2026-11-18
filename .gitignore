@@ -6,6 +6,10 @@ __pycache__/
 .coverage
 htmlcov/
 
+# User-uploaded document collection
+data/documents/*
+!data/documents/.gitkeep
+
 # Virtual environments
 .venv/
 venv/

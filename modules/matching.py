@@ -11,13 +11,28 @@ from modules.preprocessing import preprocess_text
 DEFAULT_MATCH_THRESHOLD = 50.0
 
 
+
 def split_sentences(text: str) -> list[str]:
-    """Split text into non-empty sentences using common sentence punctuation."""
+    """Split text into sentences while handling PDF line breaks."""
+
     if not isinstance(text, str):
         raise TypeError("Input text must be a string.")
 
-    parts = re.split(r"(?<=[.!?])\s+|\n+", text.strip())
-    return [part.strip() for part in parts if part.strip()]
+    # PDF extraction often inserts newlines between words.
+    # Convert all whitespace sequences into normal spaces.
+    cleaned_text = re.sub(r"\s+", " ", text.strip())
+
+    # Split only at sentence-ending punctuation.
+    parts = re.split(r"(?<=[.!?])\s+", cleaned_text)
+
+    # Ignore short fragments such as headings and isolated words.
+    sentences = [
+        part.strip()
+        for part in parts
+        if len(part.strip().split()) >= 2
+    ]
+
+    return sentences
 
 
 def find_matching_sentences(
