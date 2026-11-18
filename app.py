@@ -1,7 +1,8 @@
-"""Streamlit interface for the PlagCheck Sprint 1 text comparison flow."""
+"""Streamlit interface for the PlagCheck text comparison flow."""
 
 import streamlit as st
 
+from modules.matching import find_matching_sentences
 from modules.similarity import calculate_similarity
 
 st.set_page_config(page_title="PlagCheck", page_icon="🔎", layout="wide")
@@ -46,8 +47,27 @@ if submitted:
                 "Common phrases, quotations, references and document context should "
                 "be considered when interpreting the result."
             )
+
+            st.subheader("Matching sentences")
+            matches = find_matching_sentences(text_a, text_b)
+            if matches:
+                st.caption(
+                    "Showing sentence pairs with at least 50% similarity. "
+                    "Each sentence from Text 1 is paired with its closest match in Text 2."
+                )
+                for index, match in enumerate(matches, start=1):
+                    with st.container(border=True):
+                        st.markdown(
+                            f"**Match {index} — {match['similarity']:.2f}% similar**"
+                        )
+                        st.markdown("**Text 1**")
+                        st.write(match["sentence_a"])
+                        st.markdown("**Text 2 — closest sentence**")
+                        st.write(match["sentence_b"])
+            else:
+                st.info("No sentence pairs met the 50% similarity threshold.")
         except (TypeError, ValueError) as error:
             st.error(str(error))
 
 st.divider()
-st.caption("Sprint 1: text input, preprocessing, similarity percentage and core automated tests.")
+st.caption("Sprint 1: text comparison and similarity score | Sprint 2: sentence-level matching.")
