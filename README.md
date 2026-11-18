@@ -3,7 +3,7 @@
 PlagCheck is a student-built web application for checking textual similarity between documents. The first increment compares two user-provided text samples.
 
 ## Current project status
-**Sprint 1 – implementation and validation.** The text comparison interface, preprocessing module, TF-IDF similarity engine and automated test cases have been added. Test execution and manual application validation are still pending.
+**Sprint 1 – implementation and partial validation.** The text comparison interface, preprocessing module, TF-IDF similarity engine and automated test cases have been added. The app has been launched locally and a sample comparison has produced a similarity result. Actual repository test execution and remaining manual checks are still pending.
 
 ## Sprint 1 functionality
 - Enter two text samples in the Streamlit interface.
@@ -11,7 +11,7 @@ PlagCheck is a student-built web application for checking textual similarity bet
 - Normalise text by lowercasing, replacing punctuation and collapsing whitespace.
 - Calculate a similarity percentage using TF-IDF and cosine similarity.
 - Display an explanation that similarity is not proof of plagiarism.
-- Run automated tests for preprocessing and similarity behaviour.
+- Automated tests for preprocessing and similarity behaviour.
 
 ## Planned later features
 - Identify matching sentences or passages.
