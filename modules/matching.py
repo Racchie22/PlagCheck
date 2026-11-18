@@ -16,7 +16,7 @@ def split_sentences(text: str) -> list[str]:
     if not isinstance(text, str):
         raise TypeError("Input text must be a string.")
 
-    parts = re.split(r"(?<=[.!?])\\s+|\\n+", text.strip())
+    parts = re.split(r"(?<=[.!?])\s+|\n+", text.strip())
     return [part.strip() for part in parts if part.strip()]
 
 
@@ -45,7 +45,7 @@ def find_matching_sentences(
 
     original_a, cleaned_a = zip(*valid_a)
     original_b, cleaned_b = zip(*valid_b)
-    vectorizer = TfidfVectorizer(token_pattern=r"(?u)\\b\\w+\\b")
+    vectorizer = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b")
     try:
         vectors = vectorizer.fit_transform(list(cleaned_a) + list(cleaned_b))
     except ValueError as exc:
