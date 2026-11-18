@@ -6,7 +6,7 @@ This log records the project's actual planning and development activities. Updat
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
 - Initial repository branch: main
-- Current stage: Sprint 1 – implementation and validation
+- Current stage: Sprint 1 – implementation and partial validation
 - Current working arrangement: Initial planning and implementation are being handled by the repository owner. Additional collaborators may be invited later.
 
 ## Phase 0 – Planning and setup
@@ -30,7 +30,7 @@ This log records the project's actual planning and development activities. Updat
 - Decisions: Use Python, Streamlit, scikit-learn, SQLite and Pytest as the planned technology stack. Begin with text-to-text comparison before adding document uploads and reporting. Handle initial planning and implementation individually; discuss additional collaborators later.
 - Evidence: Initial baseline commit and GitHub issues #1–#10 in the PlagCheck repository.
 
-### [Actual date] – GitHub Project board created
+### GitHub Project board setup
 - Goal: Set up a visual view for tracking the product backlog.
 - Participants: Repository owner.
 - Work completed: Created the PlagCheck board and added the ten user-story issues. Configured Backlog, To Do, In Progress, Testing and Done columns.
@@ -43,25 +43,26 @@ This log records the project's actual planning and development activities. Updat
 
 **Selected user stories:** US01, US02, US03 and US10 (13 estimated story points).
 
-### Work completed so far
+### Work completed
 - Added `modules/preprocessing.py` with lowercase conversion, punctuation replacement and whitespace normalisation.
 - Added `modules/similarity.py` using scikit-learn TF-IDF vectorisation and cosine similarity.
 - Added input validation for empty text and non-string values.
 - Replaced the initial placeholder screen in `app.py` with a two-text Streamlit comparison form and similarity result display.
 - Added automated test files for preprocessing and similarity behaviour.
+- Launched the Streamlit application locally and successfully completed one sample text comparison; the interface displayed a similarity result. This confirms the app launches and the basic comparison path works, but does not by itself verify all acceptance criteria.
 
 ### Validation progress
-- The 12 core test cases were run against an isolated local copy of the Sprint 1 preprocessing and similarity implementation: **12 passed**.
-- The tests still need to be run from the actual repository checkout using its installed dependencies.
-- Streamlit launch and manual UI checks: Pending.
+- The 12 core test cases were run against an isolated local copy of the Sprint 1 preprocessing and similarity implementation: **12 passed**. This was not a test run from the actual repository checkout.
+- Actual repository test execution using `python -m pytest -q`: Pending.
+- Manual checks for identical inputs, unrelated inputs and empty-input handling: Pending confirmation.
 - Sprint review / final acceptance: Pending.
 
 ### Remaining Sprint 1 actions
-1. In the project virtual environment, install dependencies from `requirements.txt`.
-2. Run `python -m pytest -q` from the repository root and resolve any failures.
-3. Run `streamlit run app.py` and manually check valid and invalid inputs.
-4. Confirm the acceptance criteria for US01, US02, US03 and US10.
-5. Record actual test output and update issue/board statuses based on evidence.
+1. From the actual repository root and active project virtual environment, run `python -m pytest -q` and resolve any failures.
+2. In the Streamlit app, test identical text, unrelated text and empty input.
+3. Confirm the acceptance criteria for US01, US02, US03 and US10.
+4. Record actual test output and update issue/board statuses based on evidence.
+5. Conduct and record the sprint review and retrospective before marking the sprint complete.
 
 ## Activity entry template
 Copy this section for each real event.
