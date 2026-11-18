@@ -1,48 +1,107 @@
 # PlagCheck – Smart Plagiarism Detection System
 
-PlagCheck is a student-built web application for checking textual similarity between documents. The current application compares two user-provided text samples.
+PlagCheck is a student-built Streamlit application for checking textual similarity between text samples and uploaded documents. It uses TF-IDF vectorisation and cosine similarity to identify textual overlap and likely matching sentences.
 
-## Current project status
-**Sprint 1:** Core text comparison is implemented. The user has run the Sprint 1 tests successfully and confirmed the app launches and produces a comparison result.
+## Project status
 
-**Sprint 2:** Sentence-level matching (US04) is under implementation and local validation.
+| Sprint | Deliverable | Status |
+|---|---|---|
+| Sprint 1 | Core text comparison and preprocessing | Complete |
+| Sprint 2 | Sentence-level matching | Complete |
+| Sprint 3 | Document upload and local collection comparison | Complete |
+| Sprint 4 | SQLite history, dashboard and PDF reports | Planned |
+| Sprint 5 | Stabilisation, CI and final documentation | Planned |
 
 ## Current functionality
+
+### Text comparison
 - Enter two text samples in the Streamlit interface.
-- Validate that both text boxes contain text.
-- Normalise text by lowercasing, replacing punctuation and collapsing whitespace.
+- Validate that both inputs contain text.
+- Preprocess text by lowercasing, replacing punctuation and normalising whitespace.
 - Calculate an overall similarity percentage using TF-IDF and cosine similarity.
-- Split text into sentences and find the closest sentence in Text 2 for each sentence in Text 1.
-- Display sentence pairs whose similarity is at least 50%.
-- Explain that similarity is not proof of plagiarism.
 
-## Sentence matching rule
-Sentence matching uses TF-IDF vectors and cosine similarity. For each sentence in Text 1, the application selects its most similar sentence in Text 2. A pair is displayed when its score is at least 50%. This is a heuristic threshold for inspecting possible overlap, not a plagiarism verdict. A sentence may be paired with the same Text 2 sentence as another sentence in Text 1.
+### Sentence-level matching
+- Split text into sentences using common sentence-ending punctuation.
+- For each sentence in Text 1, find its closest sentence in Text 2.
+- Display sentence pairs that meet the default 50% similarity threshold.
+- Handle whitespace and line breaks commonly introduced during PDF text extraction.
 
-## Planned later features
+### Document upload and comparison
 - Upload TXT, PDF and DOCX documents.
-- Compare against documents stored in the application.
-- Save check history in SQLite.
-- Dashboard and downloadable report.
+- Extract text using pypdf and python-docx.
+- Add documents to a local document collection.
+- Compare an uploaded document against readable documents in that collection.
+- Rank results by similarity percentage.
+- Display the closest matching document and matching sentence pairs.
 
-## Scope and limitations
-The application checks similarity only between text supplied to it. It does not search the entire internet. A similarity score is an indicator of textual overlap, not a final judgement of plagiarism or academic misconduct. Sentence splitting currently uses common punctuation (period, question mark and exclamation mark); abbreviations and complex formatting may need more advanced handling later.
+### Automated testing
+- Pytest coverage for preprocessing, similarity calculation, sentence matching, document extraction and document storage.
+- Includes a multi-page PDF extraction test.
+- Latest user-reported local test result: **35 tests passed**.
 
-## Technology
-Python, Streamlit, scikit-learn, SQLite, Pytest, pypdf and python-docx.
+## Technology stack
+
+- Python
+- Streamlit
+- scikit-learn
+- TF-IDF and cosine similarity
+- pypdf
+- python-docx
+- Pytest
+- ReportLab (dependency included for PDF report work planned in Sprint 4)
+- SQLite (planned for Sprint 4)
 
 ## Run locally
+
 1. Create and activate a Python virtual environment.
 2. Install dependencies: `pip install -r requirements.txt`
-3. Run tests: `python -m pytest -q`
+3. Run tests: `python -m pytest -v`
 4. Start the app: `streamlit run app.py`
 
 ## Repository structure
-- `app.py` – Streamlit application
-- `modules/preprocessing.py` – text normalisation
-- `modules/similarity.py` – overall TF-IDF similarity
-- `modules/matching.py` – sentence-level matching
-- `tests/` – automated tests
-- `docs/` – project and Agile artefacts
 
-See [project proposal](docs/project_proposal.md), [user stories](docs/user_stories.md), [product backlog](docs/product_backlog.md) and [execution log](docs/agile_execution_log.md).
+```text
+PlagCheck/
+├── app.py
+├── requirements.txt
+├── README.md
+├── modules/
+│   ├── preprocessing.py
+│   ├── similarity.py
+│   ├── matching.py
+│   ├── document_reader.py
+│   └── document_store.py
+├── data/
+│   └── documents/
+│       └── .gitkeep
+├── tests/
+│   ├── test_preprocessing.py
+│   ├── test_similarity.py
+│   ├── test_matching.py
+│   ├── test_document_reader.py
+│   └── test_document_store.py
+└── docs/
+    ├── agile_execution_log.md
+    ├── github_project_board_setup.md
+    ├── product_backlog.md
+    ├── project_proposal.md
+    ├── team_onboarding.md
+    └── user_stories.md
+```
+
+## Scope and limitations
+
+- PlagCheck compares user-provided text and documents against a local collection. It does not search the entire internet.
+- Similarity scores indicate textual overlap; they are not proof of plagiarism or academic misconduct.
+- TF-IDF is based on word usage and does not understand meaning like a semantic language model.
+- The sentence-matching threshold is heuristic. Each sentence in Text 1 is matched independently to its closest sentence in Text 2, so multiple sentences may select the same match.
+- Scanned/image-only PDFs may not provide extractable text because OCR is not currently implemented.
+- Documents added to the local collection are excluded from Git tracking.
+
+## Project documentation
+
+- [Project Proposal](docs/project_proposal.md)
+- [User Stories](docs/user_stories.md)
+- [Product Backlog](docs/product_backlog.md)
+- [Agile Execution Log](docs/agile_execution_log.md)
+- [GitHub Project Board Setup](docs/github_project_board_setup.md)
