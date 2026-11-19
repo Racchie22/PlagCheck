@@ -13,7 +13,7 @@ Story points are initial relative estimates, not hours. Related stories may be i
 | US05 | As a user, I want to upload TXT, PDF or DOCX files so that I can compare real documents. | Should | 5 | Complete |
 | US06 | As a user, I want to compare an uploaded document with documents stored in the app so that I can check against a local collection. | Should | 5 | Complete |
 | US07 | As a user, I want previous checks to be saved so that I can review them later. | Could | 3 | Complete |
-| US08 | As a user, I want a dashboard summary so that I can view basic usage and result information. | Could | 3 | Planned |
+| US08 | As a user, I want a dashboard summary so that I can view basic usage and result information. | Could | 3 | Complete |
 | US09 | As a user, I want to download a report so that I can keep a record of a comparison. | Could | 3 | Complete |
 | US10 | As a developer, I want automated tests for core behaviour so that changes can be checked reliably. | Must | 5 | Complete |
 
