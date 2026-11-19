@@ -6,7 +6,7 @@ This log records actual planning and development activities. Planned work is not
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
 - Main branch: `main`
-- Current stage: Sprint 3 completed; Sprint 4 planned
+- Current stage: Sprint 4 in progress; US07 and US09 completed, US08 pending.
 - Initial implementation was carried out by the repository owner.
 
 ## Phase 0 – Planning and setup
@@ -120,21 +120,47 @@ The application supports text-to-text comparison and document-to-local-collectio
 
 ## Sprint 4 – History, dashboard and PDF reports
 
-**Planned sprint goal:** Add persistence and reporting so users can review and retain previous comparison results.
+**Sprint goal:** Add persistence, summary information and reporting so users can review and retain previous comparison results.
 
 **Selected user stories:**
 - US07 – Save check history (3 estimated story points).
 - US08 – Dashboard summary (3 estimated story points).
 - US09 – Downloadable PDF report (3 estimated story points).
 
-### Planned work
-- Implement SQLite storage for comparison history.
-- Save useful comparison metadata and similarity results.
-- Display previous checks through a dashboard.
-- Generate downloadable PDF comparison reports.
-- Add automated tests for the new functionality.
+### US07 – Save check history (Complete)
 
-**Status:** Planned; implementation has not started.
+#### Implementation
+- Added `modules/history.py` with SQLite database initialisation and operations to save and retrieve comparison records.
+- Stored comparison type, source and target labels/names, similarity score, matching sentence data and timestamp.
+- Integrated history saving into text and document comparison flows in `app.py`.
+- Added a Comparison History tab to display saved checks, their scores, timestamps, compared items and matching sentences.
+- Kept the local SQLite database out of version control through the existing `.gitignore` rules.
+
+#### Validation and evidence
+- Added `tests/test_history.py` covering database creation, saving and retrieving records, newest-first ordering, match data, missing IDs and invalid inputs.
+- User reported that all **7 history tests passed locally**.
+- US07 was committed and pushed to `main` in commit `daf63b5` – `Sprint 4: Implement comparison history US07 integration`.
+
+### US09 – Download comparison report (Complete)
+
+#### Implementation
+- Added `modules/report_generator.py` using ReportLab to generate PDF reports in memory.
+- Reports include the comparison type, source and target names/labels, generation date, overall similarity score, matching sentence pairs and an important limitation note.
+- Integrated a PDF download button into the text comparison flow.
+- Integrated individual PDF download buttons for document-to-collection comparison results.
+- Used PDF bytes directly for Streamlit downloads; generated reports do not need to be saved as permanent files.
+
+#### Validation and evidence
+- Added `tests/test_report_generator.py` covering PDF generation, comparison details, matching sentence content, the limitation note and invalid inputs.
+- User reported that all **7 report-generator tests passed locally**.
+- User manually confirmed that PDF downloads work in the application.
+- US09 was committed and pushed to `main` in commit `c9f59da` – `Sprint 4: Add downloadable PDF comparison reports US09 integration`.
+
+### Sprint 4 status
+- US07 – Complete.
+- US09 – Complete.
+- US08 – Pending; dashboard summary has not yet been implemented.
+- Sprint 4 remains in progress until US08 is implemented and validated.
 
 ## Activity entry template
 
