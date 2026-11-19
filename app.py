@@ -14,6 +14,7 @@ from modules.matching import find_matching_sentences
 from modules.similarity import calculate_similarity
 from modules.history import save_comparison, get_history
 from modules.report_generator import generate_pdf_report
+from modules.dashboard import summarize_history
 
 
 # --------------------------------------------------
@@ -39,9 +40,10 @@ st.write(
 # APPLICATION TABS
 # --------------------------------------------------
 
-text_tab, document_tab, history_tab = st.tabs([
+text_tab, document_tab, dashboard_tab, history_tab = st.tabs([
     "Text Comparison",
     "Document Comparison",
+    "Dashboard",
     "Comparison History",
 ])
 
@@ -434,6 +436,167 @@ with document_tab:
 
 
 # --------------------------------------------------
+# DASHBOARD (US08)
+# --------------------------------------------------
+
+with dashboard_tab:
+
+    st.header("Dashboard")
+
+    st.write(
+        "Overview of your PlagCheck comparison activity."
+    )
+
+    try:
+
+        # Retrieve saved comparisons
+        history = get_history()
+
+        # Calculate dashboard statistics
+        stats = summarize_history(history)
+
+        if stats["total"] == 0:
+
+            st.info(
+                "No comparison data available yet. "
+                "Perform a comparison to see dashboard statistics."
+            )
+
+        else:
+
+            # ------------------------------------------
+            # MAIN STATISTICS
+            # ------------------------------------------
+
+            st.subheader("Overall Statistics")
+
+            col1, col2, col3, col4 = st.columns(4)
+
+            col1.metric(
+                "Total Comparisons",
+                stats["total"],
+            )
+
+            col2.metric(
+                "Average Similarity",
+                f"{stats['average_similarity']:.2f}%",
+            )
+
+            col3.metric(
+                "Highest Similarity",
+                f"{stats['highest_similarity']:.2f}%",
+            )
+
+            col4.metric(
+                "Lowest Similarity",
+                f"{stats['lowest_similarity']:.2f}%",
+            )
+
+            st.divider()
+
+            # ------------------------------------------
+            # COMPARISON TYPE BREAKDOWN
+            # ------------------------------------------
+
+            st.subheader("Comparison Breakdown")
+
+            type_col1, type_col2 = st.columns(2)
+
+            with type_col1:
+
+                st.metric(
+                    "Text Comparisons",
+                    stats["text_count"],
+                )
+
+            with type_col2:
+
+                st.metric(
+                    "Document Comparisons",
+                    stats["document_count"],
+                )
+
+            chart_data = {
+                "Comparison Type": ["Text", "Document"],
+                "Count": [
+                    stats["text_count"],
+                    stats["document_count"],
+                ],
+            }
+
+            st.bar_chart(
+                chart_data,
+                x="Comparison Type",
+                y="Count",
+            )
+
+            st.divider()
+
+            # ------------------------------------------
+            # RECENT SIMILARITY SCORES
+            # ------------------------------------------
+
+            st.subheader("Recent Similarity Scores")
+
+            recent_scores = stats["recent"]
+
+            chart_data = {
+                "Comparison": list(
+                    range(1, len(recent_scores) + 1)
+                ),
+                "Similarity (%)": [
+                    record["similarity"]
+                    for record in reversed(recent_scores)
+                ],
+            }
+
+            st.line_chart(
+                chart_data,
+                x="Comparison",
+                y="Similarity (%)",
+            )
+
+            st.caption(
+                "Shows the five most recent comparisons "
+                "in chronological order."
+            )
+
+            st.divider()
+
+            # ------------------------------------------
+            # RECENT ACTIVITY
+            # ------------------------------------------
+
+            st.subheader("Recent Activity")
+
+            recent_activity = []
+
+            for record in stats["recent"]:
+
+                recent_activity.append({
+                    "Date": record["created_at"],
+                    "Type": record["comparison_type"],
+                    "Source": record["source_name"],
+                    "Compared With": record["target_name"],
+                    "Similarity": (
+                        f"{record['similarity']:.2f}%"
+                    ),
+                })
+
+            st.dataframe(
+                recent_activity,
+                use_container_width=True,
+                hide_index=True,
+            )
+
+    except Exception as error:
+
+        st.error(
+            f"Unable to load dashboard: {error}"
+        )
+
+
+# --------------------------------------------------
 # COMPARISON HISTORY (US07)
 # --------------------------------------------------
 
@@ -446,17 +609,23 @@ with history_tab:
     )
 
     try:
+
         history = get_history()
+
         if not history:
+
             st.info(
                 "No comparison history available yet. "
                 "Perform a comparison to see it here."
             )
+
         else:
+
             st.metric(
                 "Total comparisons performed",
                 len(history),
             )
+
             st.divider()
 
             for record in history:
@@ -490,16 +659,21 @@ with history_tab:
 
                         st.write("**Date and Time**")
                         st.write(record["created_at"])
+
                     st.divider()
+
                     st.write("**Source:**", record["source_name"])
                     st.write("**Target:**", record["target_name"])
+
                     st.subheader("Matching sentences")
+
                     if record["matches"]:
 
                         for index, match in enumerate(
                             record["matches"],
                             start=1,
                         ):
+
                             with st.container(border=True):
 
                                 st.markdown(
@@ -523,13 +697,17 @@ with history_tab:
     except Exception as error:
 
         st.error(f"Unable to load comparison history: {error}")
+
+
 # --------------------------------------------------
 # FOOTER
 # --------------------------------------------------
+
 st.divider()
+
 st.caption(
     "Sprint 1: Text comparison | "
     "Sprint 2: Sentence matching | "
     "Sprint 3: Document upload and collection comparison | "
-    "Sprint 4: Comparison history and PDF reports"
+    "Sprint 4: Comparison history, dashboard and PDF reports"
 )
