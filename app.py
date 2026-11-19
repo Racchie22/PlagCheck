@@ -13,6 +13,7 @@ from modules.document_store import (
 from modules.matching import find_matching_sentences
 from modules.similarity import calculate_similarity
 from modules.history import save_comparison, get_history
+from modules.report_generator import generate_pdf_report
 
 
 # --------------------------------------------------
@@ -46,7 +47,7 @@ text_tab, document_tab, history_tab = st.tabs([
 
 
 # --------------------------------------------------
-# SPRINT 1, 2 AND 4: TEXT COMPARISON
+# TEXT COMPARISON
 # --------------------------------------------------
 
 with text_tab:
@@ -151,13 +152,31 @@ with text_tab:
                         "No sentence pairs met the 50% similarity threshold."
                     )
 
+                # Generate downloadable PDF report
+                report_bytes = generate_pdf_report(
+                    comparison_type="Text",
+                    source_name="Text Sample 1",
+                    target_name="Text Sample 2",
+                    similarity=score,
+                    matches=matches,
+                )
+
+                st.download_button(
+                    label="Download PDF Report",
+                    data=report_bytes,
+                    file_name="plagcheck_text_report.pdf",
+                    mime="application/pdf",
+                    key=f"text_report_{comparison_id}",
+                    type="primary",
+                )
+
             except (TypeError, ValueError) as error:
 
                 st.error(str(error))
 
 
 # --------------------------------------------------
-# SPRINT 3 AND 4: DOCUMENT COMPARISON
+# DOCUMENT COMPARISON
 # --------------------------------------------------
 
 with document_tab:
@@ -320,8 +339,8 @@ with document_tab:
                                 result["document_name"]
                             ] = matches
 
-                            # Save individual comparison in SQLite
-                            comparison_id = save_comparison(
+                            # Save individual comparison in history
+                            save_comparison(
                                 comparison_type="Document",
                                 source_name=comparison_file.name,
                                 target_name=result["document_name"],
@@ -334,21 +353,40 @@ with document_tab:
                             "to history."
                         )
 
-                        # Display all document comparison results
+                        # Display results and provide individual PDF reports
                         st.subheader("All document comparisons")
 
                         for index, result in enumerate(results, start=1):
 
+                            document_name = result["document_name"]
+                            matches = document_matches[document_name]
+
                             with st.container(border=True):
 
                                 st.markdown(
-                                    f"**{index}. "
-                                    f"{result['document_name']}**"
+                                    f"**{index}. {document_name}**"
                                 )
 
                                 st.metric(
                                     "Similarity",
                                     f"{result['similarity']:.2f}%",
+                                )
+
+                                # Generate PDF report
+                                report_bytes = generate_pdf_report(
+                                    comparison_type="Document",
+                                    source_name=comparison_file.name,
+                                    target_name=document_name,
+                                    similarity=result["similarity"],
+                                    matches=matches,
+                                )
+
+                                st.download_button(
+                                    label="Download PDF Report",
+                                    data=report_bytes,
+                                    file_name=f"plagcheck_report_{index}.pdf",
+                                    mime="application/pdf",
+                                    key=f"document_report_{index}",
                                 )
 
                         st.caption(
@@ -390,13 +428,13 @@ with document_tab:
                                 "50% similarity threshold."
                             )
 
-            except (TypeError, ValueError) as error:
+            except (TypeError, ValueError, OSError) as error:
 
-                st.error(str(error))
+                st.error(f"Document comparison failed: {error}")
 
 
 # --------------------------------------------------
-# SPRINT 4: COMPARISON HISTORY (US07)
+# COMPARISON HISTORY (US07)
 # --------------------------------------------------
 
 with history_tab:
@@ -407,25 +445,18 @@ with history_tab:
         "View your previously performed text and document comparisons."
     )
 
-    # Retrieve all saved comparisons
     try:
-
         history = get_history()
-
         if not history:
-
             st.info(
                 "No comparison history available yet. "
                 "Perform a comparison to see it here."
             )
-
         else:
-
             st.metric(
                 "Total comparisons performed",
                 len(history),
             )
-
             st.divider()
 
             for record in history:
@@ -451,6 +482,7 @@ with history_tab:
                     with col2:
 
                         st.write("**Similarity Score**")
+
                         st.metric(
                             "Similarity",
                             f"{record['similarity']:.2f}%",
@@ -458,21 +490,16 @@ with history_tab:
 
                         st.write("**Date and Time**")
                         st.write(record["created_at"])
-
                     st.divider()
-
                     st.write("**Source:**", record["source_name"])
                     st.write("**Target:**", record["target_name"])
-
                     st.subheader("Matching sentences")
-
                     if record["matches"]:
 
                         for index, match in enumerate(
                             record["matches"],
                             start=1,
                         ):
-
                             with st.container(border=True):
 
                                 st.markdown(
@@ -496,17 +523,13 @@ with history_tab:
     except Exception as error:
 
         st.error(f"Unable to load comparison history: {error}")
-
-
 # --------------------------------------------------
 # FOOTER
 # --------------------------------------------------
-
 st.divider()
-
 st.caption(
     "Sprint 1: Text comparison | "
     "Sprint 2: Sentence matching | "
     "Sprint 3: Document upload and collection comparison | "
-    "Sprint 4: Comparison history"
+    "Sprint 4: Comparison history and PDF reports"
 )
