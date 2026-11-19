@@ -11,9 +11,9 @@ The backlog is prioritised and will be refined as the project progresses. Story 
 | 5 | US04 | Sentence-level matching indicators | Should | 5 | Sprint 2 | Complete |
 | 6 | US05 | TXT/PDF/DOCX upload and extraction | Should | 5 | Sprint 3 | Complete |
 | 7 | US06 | Compare against locally stored documents | Should | 5 | Sprint 3 | Complete |
-| 8 | US07 | SQLite check history | Could | 3 | Sprint 4 | Planned |
-| 9 | US08 | Dashboard summary | Could | 3 | Sprint 4 | Planned |
-| 10 | US09 | Downloadable PDF report | Could | 3 | Sprint 4 | Planned |
+| 8 | US07 | SQLite check history | Could | 3 | Sprint 4 | Complete |
+| 9 | US08 | Dashboard summary | Could | 3 | Sprint 4 | Complete |
+| 10 | US09 | Downloadable PDF report | Could | 3 | Sprint 4 | Complete |
 
 **Initial estimated backlog total:** 37 story points. This is a planning estimate, not completed velocity.
 
@@ -47,7 +47,9 @@ US05 and US06 delivered TXT/PDF/DOCX extraction, local document storage, ranked 
 - US08 – Display dashboard summaries.
 - US09 – Generate downloadable PDF reports.
 
-**Status:** Planned; not yet implemented.
+US07 delivered SQLite-backed comparison history and a history view. US08 delivered a dashboard with summary metrics, comparison-type breakdown, recent activity and similarity visualisation. US09 delivered downloadable PDF comparison reports. The user confirmed local testing for the dashboard and the earlier history/report features.
+
+**Status:** Complete.
 
 ### Sprint 5 – Stabilisation
 Potential work includes broader regression testing, refactoring, continuous integration and final documentation. Scope will be refined after Sprint 4.
