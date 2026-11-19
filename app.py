@@ -12,7 +12,12 @@ from modules.document_store import (
 )
 from modules.matching import find_matching_sentences
 from modules.similarity import calculate_similarity
+from modules.history import save_comparison, get_history
 
+
+# --------------------------------------------------
+# PAGE CONFIGURATION
+# --------------------------------------------------
 
 st.set_page_config(
     page_title="PlagCheck",
@@ -28,20 +33,28 @@ st.write(
     "Similarity is an indicator of textual overlap, not proof of plagiarism."
 )
 
-text_tab, document_tab = st.tabs([
+
+# --------------------------------------------------
+# APPLICATION TABS
+# --------------------------------------------------
+
+text_tab, document_tab, history_tab = st.tabs([
     "Text Comparison",
     "Document Comparison",
+    "Comparison History",
 ])
 
 
 # --------------------------------------------------
-# SPRINT 1 AND SPRINT 2: TEXT COMPARISON
+# SPRINT 1, 2 AND 4: TEXT COMPARISON
 # --------------------------------------------------
 
 with text_tab:
+
     st.header("Compare Text Samples")
 
     with st.form("comparison_form"):
+
         left, right = st.columns(2)
 
         with left:
@@ -65,15 +78,41 @@ with text_tab:
         )
 
     if submitted:
+
         if not text_a.strip() or not text_b.strip():
+
             st.error("Please enter text in both boxes before comparing.")
 
         else:
+
             try:
+                # Calculate overall similarity
                 score = calculate_similarity(text_a, text_b)
 
+                # Find matching sentences
+                matches = find_matching_sentences(text_a, text_b)
+
+                # Save comparison in SQLite history
+                comparison_id = save_comparison(
+                    comparison_type="Text",
+                    source_name="Text Sample 1",
+                    target_name="Text Sample 2",
+                    similarity=score,
+                    matches=matches,
+                )
+
+                st.success(
+                    f"Comparison saved successfully! ID: {comparison_id}"
+                )
+
+                # Display comparison result
                 st.subheader("Comparison result")
-                st.metric("Text similarity", f"{score:.2f}%")
+
+                st.metric(
+                    "Text similarity",
+                    f"{score:.2f}%",
+                )
+
                 st.progress(int(round(score)))
 
                 st.write(
@@ -82,45 +121,57 @@ with text_tab:
                     "that plagiarism has occurred."
                 )
 
+                # Display matching sentences
                 st.subheader("Matching sentences")
-                matches = find_matching_sentences(text_a, text_b)
 
                 if matches:
+
                     st.caption(
                         "Showing sentence pairs with at least 50% similarity."
                     )
 
                     for index, match in enumerate(matches, start=1):
+
                         with st.container(border=True):
+
                             st.markdown(
                                 f"**Match {index} — "
                                 f"{match['similarity']:.2f}% similar**"
                             )
+
                             st.write("Text 1:")
                             st.write(match["sentence_a"])
+
                             st.write("Text 2:")
                             st.write(match["sentence_b"])
 
                 else:
+
                     st.info(
                         "No sentence pairs met the 50% similarity threshold."
                     )
 
             except (TypeError, ValueError) as error:
+
                 st.error(str(error))
 
 
 # --------------------------------------------------
-# SPRINT 3: DOCUMENT UPLOAD AND COMPARISON
+# SPRINT 3 AND 4: DOCUMENT COMPARISON
 # --------------------------------------------------
 
 with document_tab:
+
     st.header("Document Comparison")
 
     st.write(
         "Upload a document and compare it against documents "
         "previously added to the local collection."
     )
+
+    # --------------------------------------------------
+    # ADD DOCUMENTS TO COLLECTION
+    # --------------------------------------------------
 
     st.subheader("1. Add documents to the collection")
 
@@ -132,34 +183,42 @@ with document_tab:
     )
 
     if st.button("Add to collection", key="add_documents"):
+
         if not collection_uploads:
+
             st.warning("Please select at least one document.")
 
         else:
+
             saved_count = 0
 
             for uploaded_file in collection_uploads:
+
                 try:
                     saved_path = save_document(
                         uploaded_file.name,
                         uploaded_file.getvalue(),
                     )
-                    st.success(
-                        f"Added: {saved_path.name}"
-                    )
+
+                    st.success(f"Added: {saved_path.name}")
+
                     saved_count += 1
 
                 except (TypeError, ValueError) as error:
-                    st.error(
-                        f"{uploaded_file.name}: {error}"
-                    )
+
+                    st.error(f"{uploaded_file.name}: {error}")
 
             if saved_count:
+
                 st.info(
                     f"{saved_count} document(s) added to the collection."
                 )
 
     st.divider()
+
+    # --------------------------------------------------
+    # COMPARE UPLOADED DOCUMENT
+    # --------------------------------------------------
 
     st.subheader("2. Compare a document")
 
@@ -174,11 +233,15 @@ with document_tab:
         type="primary",
         key="compare_documents",
     ):
+
         if comparison_file is None:
+
             st.warning("Please upload a document to compare.")
 
         else:
+
             try:
+                # Extract uploaded document text
                 uploaded_text = extract_text(
                     comparison_file.name,
                     comparison_file.getvalue(),
@@ -187,21 +250,26 @@ with document_tab:
                 stored_documents = get_stored_documents()
 
                 if not stored_documents:
+
                     st.warning(
                         "The document collection is empty. "
                         "Add some documents first."
                     )
 
                 else:
+
+                    # Compare against stored collection
                     results = compare_with_collection(uploaded_text)
 
                     if not results:
+
                         st.warning(
                             "No readable stored documents were available "
                             "for comparison."
                         )
 
                     else:
+
                         st.subheader("Comparison results")
 
                         st.metric(
@@ -220,14 +288,64 @@ with document_tab:
                             f"{best_match['similarity']:.2f}%",
                         )
 
+                        # Calculate sentence matches and save
+                        # every document comparison in history.
+                        document_matches = {}
+
+                        for result in results:
+
+                            document_path = (
+                                Path("data")
+                                / "documents"
+                                / result["document_name"]
+                            )
+
+                            stored_text = extract_text(
+                                result["document_name"],
+                                document_path.read_bytes(),
+                            )
+
+                            try:
+
+                                matches = find_matching_sentences(
+                                    uploaded_text,
+                                    stored_text,
+                                )
+
+                            except (TypeError, ValueError):
+
+                                matches = []
+
+                            document_matches[
+                                result["document_name"]
+                            ] = matches
+
+                            # Save individual comparison in SQLite
+                            comparison_id = save_comparison(
+                                comparison_type="Document",
+                                source_name=comparison_file.name,
+                                target_name=result["document_name"],
+                                similarity=result["similarity"],
+                                matches=matches,
+                            )
+
+                        st.success(
+                            f"Saved {len(results)} comparison(s) "
+                            "to history."
+                        )
+
+                        # Display all document comparison results
                         st.subheader("All document comparisons")
 
                         for index, result in enumerate(results, start=1):
+
                             with st.container(border=True):
+
                                 st.markdown(
                                     f"**{index}. "
                                     f"{result['document_name']}**"
                                 )
+
                                 st.metric(
                                     "Similarity",
                                     f"{result['similarity']:.2f}%",
@@ -239,50 +357,156 @@ with document_tab:
                             "overlap, not proof of plagiarism."
                         )
 
-                        st.subheader("Matching sentences with closest document")
+                        # Display matches for closest document
+                        st.subheader(
+                            "Matching sentences with closest document"
+                        )
 
-                        try:
-                            matches = find_matching_sentences(
-                                uploaded_text,
-                                extract_text(
-                                    best_match["document_name"],
-                                    (
-                                        Path("data")
-                                        / "documents"
-                                        / best_match["document_name"]
-                                    ).read_bytes(),
-                                ),
-                            )
+                        matches = document_matches[
+                            best_match["document_name"]
+                        ]
 
-                            if matches:
-                                for index, match in enumerate(
-                                    matches, start=1
-                                ):
-                                    with st.container(border=True):
-                                        st.markdown(
-                                            f"**Match {index} — "
-                                            f"{match['similarity']:.2f}%**"
-                                        )
-                                        st.write(match["sentence_a"])
-                                        st.write(match["sentence_b"])
-                            else:
-                                st.info(
-                                    "No sentence pairs met the "
-                                    "50% similarity threshold."
-                                )
+                        if matches:
 
-                        except (TypeError, ValueError):
+                            for index, match in enumerate(
+                                matches,
+                                start=1,
+                            ):
+
+                                with st.container(border=True):
+
+                                    st.markdown(
+                                        f"**Match {index} — "
+                                        f"{match['similarity']:.2f}%**"
+                                    )
+
+                                    st.write(match["sentence_a"])
+                                    st.write(match["sentence_b"])
+
+                        else:
+
                             st.info(
-                                "Sentence-level matches could not be displayed."
+                                "No sentence pairs met the "
+                                "50% similarity threshold."
                             )
 
             except (TypeError, ValueError) as error:
+
                 st.error(str(error))
 
 
+# --------------------------------------------------
+# SPRINT 4: COMPARISON HISTORY (US07)
+# --------------------------------------------------
+
+with history_tab:
+
+    st.header("Comparison History")
+
+    st.write(
+        "View your previously performed text and document comparisons."
+    )
+
+    # Retrieve all saved comparisons
+    try:
+
+        history = get_history()
+
+        if not history:
+
+            st.info(
+                "No comparison history available yet. "
+                "Perform a comparison to see it here."
+            )
+
+        else:
+
+            st.metric(
+                "Total comparisons performed",
+                len(history),
+            )
+
+            st.divider()
+
+            for record in history:
+
+                with st.expander(
+                    f"#{record['id']} | "
+                    f"{record['comparison_type']} | "
+                    f"{record['source_name']} vs "
+                    f"{record['target_name']} | "
+                    f"{record['similarity']:.2f}%"
+                ):
+
+                    col1, col2 = st.columns(2)
+
+                    with col1:
+
+                        st.write("**Comparison ID**")
+                        st.write(record["id"])
+
+                        st.write("**Comparison Type**")
+                        st.write(record["comparison_type"])
+
+                    with col2:
+
+                        st.write("**Similarity Score**")
+                        st.metric(
+                            "Similarity",
+                            f"{record['similarity']:.2f}%",
+                        )
+
+                        st.write("**Date and Time**")
+                        st.write(record["created_at"])
+
+                    st.divider()
+
+                    st.write("**Source:**", record["source_name"])
+                    st.write("**Target:**", record["target_name"])
+
+                    st.subheader("Matching sentences")
+
+                    if record["matches"]:
+
+                        for index, match in enumerate(
+                            record["matches"],
+                            start=1,
+                        ):
+
+                            with st.container(border=True):
+
+                                st.markdown(
+                                    f"**Match {index} — "
+                                    f"{match['similarity']:.2f}% similar**"
+                                )
+
+                                st.write("First text:")
+                                st.write(match["sentence_a"])
+
+                                st.write("Second text:")
+                                st.write(match["sentence_b"])
+
+                    else:
+
+                        st.info(
+                            "No matching sentences were found "
+                            "for this comparison."
+                        )
+
+    except Exception as error:
+
+        st.error(f"Unable to load comparison history: {error}")
+
+
+# --------------------------------------------------
+# FOOTER
+# --------------------------------------------------
+
 st.divider()
+
 st.caption(
     "Sprint 1: Text comparison | "
     "Sprint 2: Sentence matching | "
-    "Sprint 3: Document upload and collection comparison"
+    "Sprint 3: Document upload and collection comparison | "
+    "Sprint 4: Comparison history"
 )
