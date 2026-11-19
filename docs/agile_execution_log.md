@@ -6,7 +6,7 @@ This log records actual planning and development activities. Planned work is not
 - Project: PlagCheck – Smart Plagiarism Detection System
 - Repository: https://github.com/Racchie22/PlagCheck
 - Main branch: `main`
-- Current stage: Sprint 4 in progress; US07 and US09 completed, US08 pending.
+- Current stage: Sprint 4 complete; US07, US08 and US09 completed.
 - Initial implementation was carried out by the repository owner.
 
 ## Phase 0 – Planning and setup
@@ -156,11 +156,26 @@ The application supports text-to-text comparison and document-to-local-collectio
 - User manually confirmed that PDF downloads work in the application.
 - US09 was committed and pushed to `main` in commit `c9f59da` – `Sprint 4: Add downloadable PDF comparison reports US09 integration`.
 
-### Sprint 4 status
+### US08 – Dashboard summary (Complete)
+
+#### Implementation
+- Added `modules/dashboard.py` with `summarize_history` to calculate dashboard statistics from saved comparison history.
+- Added dashboard metrics for total comparisons, average similarity, and highest/lowest similarity scores.
+- Added a text-versus-document comparison breakdown, recent similarity visualisation and recent activity display.
+- Integrated a dedicated Dashboard tab into `app.py`.
+- Added graceful handling for an empty comparison history.
+
+#### Validation and evidence
+- Added `tests/test_dashboard.py` covering empty history, summary statistics, recent activity limiting and invalid input.
+- User confirmed that dashboard testing was completed successfully.
+- US08 was committed and pushed to `main` in commit `ef74883` – `Sprint 4: Implement dashboard summary US08`.
+
+### Sprint 4 close-out
 - US07 – Complete.
+- US08 – Complete.
 - US09 – Complete.
-- US08 – Pending; dashboard summary has not yet been implemented.
-- Sprint 4 remains in progress until US08 is implemented and validated.
+- User confirmed testing of the dashboard; earlier history and report tests and PDF download checks were also reported successful.
+- Sprint 4 is complete.
 
 ## Activity entry template
 
