@@ -1,6 +1,10 @@
 # Team Onboarding – PlagCheck
 
-Additional members may be invited to the repository later, when they are ready to participate.
+Members of the group:
+1. Rachit Agrawal
+2. Rohit
+3. Harsh
+4. Jayant
 
 ## Getting started
 1. Accept the GitHub repository invitation using your own GitHub account.
