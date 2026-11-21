@@ -9,7 +9,7 @@ PlagCheck is a student-built Streamlit application for checking textual similari
 | Sprint 1 | Core text comparison and preprocessing | Complete |
 | Sprint 2 | Sentence-level matching | Complete |
 | Sprint 3 | Document upload and local collection comparison | Complete |
-| Sprint 4 | SQLite history, dashboard and PDF reports | Planned |
+| Sprint 4 | SQLite history, dashboard and PDF reports | Complete |
 | Sprint 5 | Stabilisation, CI and final documentation | Planned |
 
 ## Current functionality
